@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Classroom Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      padding: 30px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    .info {
+      margin-bottom: 20px;
+    }
+    .info p {
+      font-size: 16px;
+      margin: 5px 0;
+    }
+    input {
+      width: 70%;
+      padding: 8px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 8px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    ul {
+      margin-top: 20px;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .remove-btn {
+      margin-left: 10px;
+      background-color: #e74c3c;
+      border: none;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .remove-btn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>📚 Classroom Dashboard</h2>
+
+    <div class="info">
+      <p><strong>Teacher:</strong> Mr. Arjun</p>
+      <p><strong>Subject:</strong> Science</p>
+      <p><strong>Total Students:</strong> <span id="totalCount">0</span></p>
+    </div>
+
+    <input type="text" id="studentName" placeholder="Enter student name">
+    <button onclick="addStudent()">Add Student</button>
+
+    <ul id="studentList"></ul>
+  </div>
+
+  <script>
+    const classroom = {
+      teacher: "Mr. Arjun",
+      subject: "Science",
+      students: []
+    };
+
+    function updateStudentList() {
+      const list = document.getElementById("studentList");
+      list.innerHTML = "";
+
+      classroom.students.forEach((student, index) => {
+        const li = document.createElement("li");
+        li.textContent = student;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.className = "remove-btn";
+        removeBtn.onclick = function() {
+          removeStudent(index);
+        };
+
+        li.appendChild(removeBtn);
+        list.appendChild(li);
+      });
+
+      document.getElementById("totalCount").textContent = classroom.students.length;
+    }
+
+    function addStudent() {
+      const input = document.getElementById("studentName");
+      const name = input.value.trim();
+
+      if (name !== "") {
+        classroom.students.push(name);
+        input.value = "";
+        updateStudentList();
+      } else {
+        alert("Please enter a student name.");
+      }
+    }
+
+    function removeStudent(index) {
+      classroom.students.splice(index, 1);
+      updateStudentList();
+    }
+  </script>
+
+</body>
+</html>
